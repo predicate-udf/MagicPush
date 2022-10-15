@@ -1,0 +1,38 @@
+
+import sys
+import numpy as np
+from ppl_interface import *
+
+op0 = InitTable("data_0.pickle")
+op1 = DropColumns(op0, ["1"])
+op2 = Rename(op1, { "usual":"parents","proper":"has_nurs","complete":"form","convenient":"children","convenient.1":"housing","nonprob":"finance","recommended":"social","recommend":"health" })
+op3 = DropColumns(op2, ['parents', 'has_nurs', 'form', 'children', 'housing', 'finance', 'social'])
+op5 = DropColumns(op2, ["health"])
+op6 = GetDummies(op5, ['parents', 'has_nurs', 'form', 'children', 'housing', 'finance', 'social'], {'parents_great_pret': 'int', 'parents_pretentious': 'int', 'parents_usual': 'int', 'has_nurs_critical': 'int', 'has_nurs_improper': 'int', 'has_nurs_less_proper': 'int', 'has_nurs_proper': 'int', 'has_nurs_very_crit': 'int', 'form_complete': 'int', 'form_completed': 'int', 'form_foster': 'int', 'form_incomplete': 'int', 'children_convenient': 'int', 'children_critical': 'int', 'children_less_conv': 'int', 'housing_convenient': 'int', 'housing_inconv': 'int', 'finance_nonprob': 'int', 'finance_problematic': 'int', 'finance_slightly_prob': 'int', 'social_not_recom': 'int', 'social_priority': 'int', 'social_recommended': 'int'})
+#op15 = ConcatColumn([op3,op6])
+op15 = InnerJoin(op3, op6, ['index'], ['index'])
+op15_0 = SetItem(op15, "health", 'lambda xxx___: { "not_recom":0 }[xxx___["health"]] if xxx___["health"] in ["not_recom"] else  xxx___["health"]')
+op15_1 = SetItem(op15_0, "parents_great_pret", 'lambda xxx___: { "not_recom":0 }[xxx___["parents_great_pret"]] if xxx___["parents_great_pret"] in ["not_recom"] else  xxx___["parents_great_pret"]')
+op15_2 = SetItem(op15_1, "parents_pretentious", 'lambda xxx___: { "not_recom":0 }[xxx___["parents_pretentious"]] if xxx___["parents_pretentious"] in ["not_recom"] else  xxx___["parents_pretentious"]')
+op15_3 = SetItem(op15_2, "parents_usual", 'lambda xxx___: { "not_recom":0 }[xxx___["parents_usual"]] if xxx___["parents_usual"] in ["not_recom"] else  xxx___["parents_usual"]')
+op15_4 = SetItem(op15_3, "has_nurs_critical", 'lambda xxx___: { "not_recom":0 }[xxx___["has_nurs_critical"]] if xxx___["has_nurs_critical"] in ["not_recom"] else  xxx___["has_nurs_critical"]')
+op15_5 = SetItem(op15_4, "has_nurs_improper", 'lambda xxx___: { "not_recom":0 }[xxx___["has_nurs_improper"]] if xxx___["has_nurs_improper"] in ["not_recom"] else  xxx___["has_nurs_improper"]')
+op15_6 = SetItem(op15_5, "has_nurs_less_proper", 'lambda xxx___: { "not_recom":0 }[xxx___["has_nurs_less_proper"]] if xxx___["has_nurs_less_proper"] in ["not_recom"] else  xxx___["has_nurs_less_proper"]')
+op15_7 = SetItem(op15_6, "has_nurs_proper", 'lambda xxx___: { "not_recom":0 }[xxx___["has_nurs_proper"]] if xxx___["has_nurs_proper"] in ["not_recom"] else  xxx___["has_nurs_proper"]')
+op15_8 = SetItem(op15_7, "has_nurs_very_crit", 'lambda xxx___: { "not_recom":0 }[xxx___["has_nurs_very_crit"]] if xxx___["has_nurs_very_crit"] in ["not_recom"] else  xxx___["has_nurs_very_crit"]')
+op15_9 = SetItem(op15_8, "form_complete", 'lambda xxx___: { "not_recom":0 }[xxx___["form_complete"]] if xxx___["form_complete"] in ["not_recom"] else  xxx___["form_complete"]')
+op15_10 = SetItem(op15_9, "form_completed", 'lambda xxx___: { "not_recom":0 }[xxx___["form_completed"]] if xxx___["form_completed"] in ["not_recom"] else  xxx___["form_completed"]')
+op15_11 = SetItem(op15_10, "form_foster", 'lambda xxx___: { "not_recom":0 }[xxx___["form_foster"]] if xxx___["form_foster"] in ["not_recom"] else  xxx___["form_foster"]')
+op15_12 = SetItem(op15_11, "form_incomplete", 'lambda xxx___: { "not_recom":0 }[xxx___["form_incomplete"]] if xxx___["form_incomplete"] in ["not_recom"] else  xxx___["form_incomplete"]')
+op15_13 = SetItem(op15_12, "children_convenient", 'lambda xxx___: { "not_recom":0 }[xxx___["children_convenient"]] if xxx___["children_convenient"] in ["not_recom"] else  xxx___["children_convenient"]')
+op15_14 = SetItem(op15_13, "children_critical", 'lambda xxx___: { "not_recom":0 }[xxx___["children_critical"]] if xxx___["children_critical"] in ["not_recom"] else  xxx___["children_critical"]')
+op15_15 = SetItem(op15_14, "children_less_conv", 'lambda xxx___: { "not_recom":0 }[xxx___["children_less_conv"]] if xxx___["children_less_conv"] in ["not_recom"] else  xxx___["children_less_conv"]')
+op15_16 = SetItem(op15_15, "housing_convenient", 'lambda xxx___: { "not_recom":0 }[xxx___["housing_convenient"]] if xxx___["housing_convenient"] in ["not_recom"] else  xxx___["housing_convenient"]')
+op15_17 = SetItem(op15_16, "housing_inconv", 'lambda xxx___: { "not_recom":0 }[xxx___["housing_inconv"]] if xxx___["housing_inconv"] in ["not_recom"] else  xxx___["housing_inconv"]')
+op15_18 = SetItem(op15_17, "finance_nonprob", 'lambda xxx___: { "not_recom":0 }[xxx___["finance_nonprob"]] if xxx___["finance_nonprob"] in ["not_recom"] else  xxx___["finance_nonprob"]')
+op15_19 = SetItem(op15_18, "finance_problematic", 'lambda xxx___: { "not_recom":0 }[xxx___["finance_problematic"]] if xxx___["finance_problematic"] in ["not_recom"] else  xxx___["finance_problematic"]')
+op15_20 = SetItem(op15_19, "finance_slightly_prob", 'lambda xxx___: { "not_recom":0 }[xxx___["finance_slightly_prob"]] if xxx___["finance_slightly_prob"] in ["not_recom"] else  xxx___["finance_slightly_prob"]')
+op15_21 = SetItem(op15_20, "social_not_recom", 'lambda xxx___: { "not_recom":0 }[xxx___["social_not_recom"]] if xxx___["social_not_recom"] in ["not_recom"] else  xxx___["social_not_recom"]')
+op15_22 = SetItem(op15_21, "social_priority", 'lambda xxx___: { "not_recom":0 }[xxx___["social_priority"]] if xxx___["social_priority"] in ["not_recom"] else  xxx___["social_priority"]')
+op20 = SetItem(op15_22, "social_recommended", 'lambda xxx___: { "recommend":4 }[xxx___["social_recommended"]] if xxx___["social_recommended"] in ["recommend"] else  xxx___["social_recommended"]')
+
